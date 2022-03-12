@@ -10,6 +10,7 @@ public class DataPersistence : MonoBehaviour
     // Save the playerName between sessions.
     // Set in MainMenu is accessed in MainScene
     [HideInInspector] public string PlayerName;
+    [HideInInspector] public int HighScore;
 
     private void Awake()
     {
@@ -21,5 +22,11 @@ public class DataPersistence : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        PlayerName = String.Empty;
+        HighScore = 0;
     }
 }
