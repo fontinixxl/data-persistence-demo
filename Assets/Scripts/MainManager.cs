@@ -35,7 +35,7 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
-        
+
         DisplayHighScore();
     }
 
@@ -71,26 +71,25 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
-        CheckHighScore();
+        SaveHighScore();
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
 
-    private void CheckHighScore()
+    private void SaveHighScore()
     {
-        if (m_Points > DataPersistence.Instance.HighScore)
-        {
-            DataPersistence.Instance.HighScore = m_Points;
-        }
-
+        // Exit if we didn't beat HighScore
+        if (m_Points <= DataPersistence.Instance.HighScore) return;
+        
+        DataPersistence.Instance.Save(m_Points);
         DisplayHighScore();
+
     }
 
     private void DisplayHighScore()
     {
         var highScore = DataPersistence.Instance.HighScore;
-        if (highScore == 0) return;
-
-        HighScoreText.text = $"Best Score: {DataPersistence.Instance.PlayerName} - {highScore}";
+        var playerName = DataPersistence.Instance.HighScorePlayerName;
+        HighScoreText.text = $"Best Score: {playerName} : {highScore}";
     }
 }

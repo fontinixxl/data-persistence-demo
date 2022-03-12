@@ -1,0 +1,4 @@
+- Allow to turn on/off debug messages from Editor
+- Make MainScene testable without executing first MainMenu
+  In this case, high score & save/load features would not be available
+- (EXTRA) Refactor Persistence Solution to not use Singleton.

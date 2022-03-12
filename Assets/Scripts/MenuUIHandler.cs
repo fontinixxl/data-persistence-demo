@@ -12,10 +12,14 @@ public class MenuUIHandler : MonoBehaviour
 {
     [SerializeField] private InputField PlayerInputField;
 
+    private void Start()
+    {
+        PlayerInputField.text = DataPersistence.Instance.HighScorePlayerName;
+    }
+
     public void StartNew()
     {
         SavePlayerName();
-        // TODO: Refactor using Scene names with addressables or something different than indexes
         SceneManager.LoadScene(1);
     }
     
@@ -23,7 +27,13 @@ public class MenuUIHandler : MonoBehaviour
     {
         if (string.IsNullOrEmpty(PlayerInputField.text)) return;
         
-        DataPersistence.Instance.PlayerName = PlayerInputField.text;
+        DataPersistence.Instance.CurrentPlayerName = PlayerInputField.text;
+    }
+    
+    public void DeleteSavedDataButtonHandler()
+    {
+        DataPersistence.Instance.DeleteSaveData();
+        PlayerInputField.text = string.Empty;
     }
 
     public void Exit()
