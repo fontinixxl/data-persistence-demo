@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class DataPersistence : MonoBehaviour
 {
+    private static string FILE_NAME = "savefile.json";
+    
     public static DataPersistence Instance;
-    
-    [Tooltip("Name of the file without extension")]
-    [SerializeField] private string filename;
-    
+
     // Current session player name
     public string CurrentPlayerName { get; set; }
     
@@ -29,7 +28,7 @@ public class DataPersistence : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         
-        _savePath = $"{Application.persistentDataPath}/{filename}.json";
+        _savePath = Path.Combine(Application.persistentDataPath, FILE_NAME);
         Load();
     }
 
