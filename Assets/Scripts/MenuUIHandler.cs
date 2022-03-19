@@ -1,8 +1,11 @@
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+using Persistence;
+using ScriptableObjects.PrimitiveTypes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 // Sets the script to be executed later than all default scripts
@@ -10,30 +13,34 @@ using UnityEngine.UI;
 [DefaultExecutionOrder(1000)]
 public class MenuUIHandler : MonoBehaviour
 {
-    [SerializeField] private InputField PlayerInputField;
-
+    [SerializeField] private SaveSystemSO saveSystem;
+    [SerializeField] private StringVariable playerName;
+    [FormerlySerializedAs("PlayerInputField")] 
+    [SerializeField] private InputField playerInputField;
+    
     private void Start()
     {
-        PlayerInputField.text = DataPersistence.Instance.HighScorePlayerName;
+        if (!saveSystem.LoadSaveDataFromDisk()) return;
+        
+        playerName.Value = saveSystem.saveData.PlayerName;
+        playerInputField.text = playerName.Value;
     }
 
-    public void StartNew()
+    public void StartNewGameButtonHandler()
     {
-        SavePlayerName();
+        StoreInputFieldPlayerNameIntoVariable();
         SceneManager.LoadScene(1);
     }
     
-    private void SavePlayerName()
+    private void StoreInputFieldPlayerNameIntoVariable()
     {
-        if (string.IsNullOrEmpty(PlayerInputField.text)) return;
-        
-        DataPersistence.Instance.CurrentPlayerName = PlayerInputField.text;
+        playerName.Value = playerInputField.text;
     }
     
     public void DeleteSavedDataButtonHandler()
     {
-        DataPersistence.Instance.DeleteSaveData();
-        PlayerInputField.text = string.Empty;
+        saveSystem.WriteEmptySaveFile();
+        playerInputField.text = string.Empty;
     }
 
     public void Exit()
@@ -43,6 +50,6 @@ public class MenuUIHandler : MonoBehaviour
 #else
         Application.Quit(); // original code to quit Unity player
 #endif
-        // MainManager.Instance.SaveColor();
+        saveSystem.SaveDataToDisk();
     }
 }

@@ -1,11 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using Persistence;
+using ScriptableObjects.PrimitiveTypes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
+    [SerializeField] private SaveSystemSO saveSystem;
+    [SerializeField] private IntVariable playerScore;
+    [SerializeField] private StringVariable playerName;
+
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -14,10 +18,8 @@ public class MainManager : MonoBehaviour
     public Text HighScoreText;
     public GameObject GameOverText;
     
-    private bool m_Started = false;
-    private int m_Points;
-    
-    private bool m_GameOver = false;
+    private bool m_Started;
+    private bool m_GameOver;
     
     void Start()
     {
@@ -36,6 +38,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
+        saveSystem.LoadSaveDataFromDisk();
         DisplayHighScore();
     }
 
@@ -65,8 +68,8 @@ public class MainManager : MonoBehaviour
 
     void AddPoint(int point)
     {
-        m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        playerScore.ApplyChange(point);
+        ScoreText.text = $"Score : {playerScore.Value}";
     }
 
     public void GameOver()
@@ -78,18 +81,23 @@ public class MainManager : MonoBehaviour
 
     private void SaveHighScore()
     {
-        // Exit if we didn't beat HighScore
-        if (m_Points <= DataPersistence.Instance.HighScore) return;
+        if (string.IsNullOrEmpty(playerName.Value))
+        {
+            Debug.LogWarningFormat($"High Score not saved, since there is no PlayerName!");
+            return;
+        }
         
-        DataPersistence.Instance.Save(m_Points);
-        DisplayHighScore();
-
+        if (playerScore.Value > saveSystem.saveData.HighScore)
+        {
+            saveSystem.SaveDataToDisk();
+            DisplayHighScore();
+        }
     }
 
     private void DisplayHighScore()
     {
-        var highScore = DataPersistence.Instance.HighScore;
-        var playerName = DataPersistence.Instance.HighScorePlayerName;
-        HighScoreText.text = $"Best Score: {playerName} : {highScore}";
+        var highScore = saveSystem.saveData.HighScore;
+        var highScorePlayerName = saveSystem.saveData.PlayerName;
+        HighScoreText.text = $"Best Score: {highScorePlayerName} : {highScore}";
     }
 }

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0ea6efbd8248cdb6578f4c1c119dfc, type: 3}
+  m_Name: SaveSystem
+  m_EditorClassIdentifier: 
+  playerScore: {fileID: 11400000, guid: 1f6a9fb69a17f4fbfaf26abf4f823852, type: 2}
+  playerName: {fileID: 11400000, guid: ccaba8ddbd4e6403c8692b6a29f39bbb, type: 2}
+  saveFilename: save.json
+  saveData:
+    PlayerName: 
+    HighScore: 0

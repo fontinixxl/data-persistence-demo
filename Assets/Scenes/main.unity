@@ -498,6 +498,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d110623a642692246a42fbc2d8d89884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveSystem: {fileID: 11400000, guid: 7fe8e057326814f419544eb5033dfbdd, type: 2}
+  playerScore: {fileID: 11400000, guid: 1f6a9fb69a17f4fbfaf26abf4f823852, type: 2}
+  playerName: {fileID: 11400000, guid: ccaba8ddbd4e6403c8692b6a29f39bbb, type: 2}
   BrickPrefab: {fileID: 897975713663390409, guid: 63f25b9733d2bcd4fa2ff6de1264c739, type: 3}
   LineCount: 6
   Ball: {fileID: 177912862}
