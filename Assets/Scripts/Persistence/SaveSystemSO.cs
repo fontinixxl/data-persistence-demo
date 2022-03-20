@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace Persistence
 {
-    [CreateAssetMenu(menuName = "SO/SaveSystem", fileName = "SaveSystem", order = 0)]
+    // Commented so no other instance of SaveSystem is created
+    // [CreateAssetMenu(menuName = "SO/SaveSystem", fileName = "SaveSystem", order = 0)]
     public class SaveSystemSO : ScriptableObject
     {
         [SerializeField] private IntVariable playerScore;

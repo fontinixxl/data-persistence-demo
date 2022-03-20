@@ -4,7 +4,7 @@ using UnityEditor;
 using Persistence;
 using ScriptableObjects.PrimitiveTypes;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -17,6 +17,10 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private StringVariable playerName;
     [FormerlySerializedAs("PlayerInputField")] 
     [SerializeField] private InputField playerInputField;
+
+    [Header("Broadcasting on")]
+    [SerializeField] private AssetReference mainScene;
+    [SerializeField] private LoadEventChannelSO loadLocation = default;
     
     private void Start()
     {
@@ -29,7 +33,7 @@ public class MenuUIHandler : MonoBehaviour
     public void StartNewGameButtonHandler()
     {
         StoreInputFieldPlayerNameIntoVariable();
-        SceneManager.LoadScene(1);
+        loadLocation.RaiseEvent(mainScene);
     }
     
     private void StoreInputFieldPlayerNameIntoVariable()
