@@ -1,3 +1,2 @@
 - Allow to turn on/off debug messages from Editor
 - Add assembly definitions
-- Separate UI from logic in MainManager (perhaps simplified MVC)
