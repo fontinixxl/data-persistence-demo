@@ -1733,7 +1733,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fdfdf1c56785947bd9d5830598e09e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveSystem: {fileID: 11400000, guid: 7fe8e057326814f419544eb5033dfbdd, type: 2}
   playerName: {fileID: 11400000, guid: ccaba8ddbd4e6403c8692b6a29f39bbb, type: 2}
   playerInputField: {fileID: 1890244184}
   mainScene:
@@ -1742,6 +1741,7 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   loadLocation: {fileID: 11400000, guid: 24ce03a187e86403d8e43e9654dc84d8, type: 2}
+  deleteSavedData: {fileID: 11400000, guid: b6db280d806a44d01b3c7bb05c1faf58, type: 2}
 --- !u!1 &1975587507
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
-    public MainManager Manager;
+    public GameController Manager;
 
     private void OnCollisionEnter(Collision other)
     {

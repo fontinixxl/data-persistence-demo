@@ -3,13 +3,8 @@ using UnityEngine;
 namespace ScriptableObjects.PrimitiveTypes
 {
     [CreateAssetMenu(fileName = "MyIntVariable", menuName = "SO/Variables/IntVariable", order = 1)]
-    public class IntVariable : ScriptableObject
+    public class IntVariable : EventChannelBaseSO
     {
-        
-#if UNITY_EDITOR
-        [Multiline]
-        [SerializeField] private string developerDescription = string.Empty;
-#endif
         public int Value;
         public bool ResetOnStart;
         public int DefaultValue;

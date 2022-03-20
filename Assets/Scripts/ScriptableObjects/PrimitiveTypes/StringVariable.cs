@@ -3,7 +3,7 @@ using UnityEngine;
 namespace ScriptableObjects.PrimitiveTypes
 {
     [CreateAssetMenu(fileName = "MyStringVariable", menuName = "SO/Variables/StringVariable", order = 0)]
-    public class StringVariable : ScriptableObject
+    public class StringVariable : EventChannelBaseSO
     {
         [SerializeField]
         private string value = "";

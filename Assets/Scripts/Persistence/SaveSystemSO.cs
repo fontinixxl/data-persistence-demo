@@ -7,10 +7,10 @@ namespace Persistence
     // [CreateAssetMenu(menuName = "SO/SaveSystem", fileName = "SaveSystem", order = 0)]
     public class SaveSystemSO : ScriptableObject
     {
-        [SerializeField] private IntVariable playerScore;
-        [SerializeField] private StringVariable playerName;
-        
         public string saveFilename = "save.json";
+        [Header("Runtime Data to Save")]
+        public IntVariable playerScore;
+        public StringVariable playerName;
         public SaveData saveData = new SaveData();
 
         private bool _dataLoadedInSession;
@@ -43,10 +43,12 @@ namespace Persistence
             if (FileManager.LoadFromFile(saveFilename, out var json))
             {
                 saveData.LoadFromJson(json);
+                playerScore.Value = saveData.HighScore;
+                
                 _dataLoadedInSession = true;
                 return _dataLoadedInSession;
             }
-
+            
             return false;
         }
         

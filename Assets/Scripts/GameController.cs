@@ -1,31 +1,27 @@
-using Persistence;
-using ScriptableObjects.PrimitiveTypes;
+using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using UnityEngine.AddressableAssets;
+using ScriptableObjects.PrimitiveTypes;
 
-public class MainManager : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     [Header("Listening to")] [SerializeField]
     private VoidEventChannelSO onSceneReady;
     [Header("Broadcasting on")]
     [SerializeField] private AssetReference thisScene;
     [SerializeField] private LoadEventChannelSO loadLocation = default;
-    [Space]
-    [SerializeField] private SaveSystemSO saveSystem;
+    [SerializeField] private VoidEventChannelSO gameOverEvent = default;
     [Space]
     [SerializeField] private IntVariable playerScore;
-    [SerializeField] private StringVariable playerName;
     
+    public static event Action<int> OnScorePoint;
+
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
-    [Header("UI")]
-    public Text ScoreText;
-    public Text HighScoreText;
-    public GameObject GameOverText;
-    
+
     private bool _started;
     private bool _gameOver;
 
@@ -36,6 +32,9 @@ public class MainManager : MonoBehaviour
 
     private void StartGame()
     {
+        // Reset previous score
+        playerScore.SetValue(0);
+        
         const float step = 0.6f;
         var perLine = Mathf.FloorToInt(4.0f / step);
         var bricksAnchor = new GameObject("Bricks");
@@ -52,9 +51,6 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
-
-        saveSystem.LoadSaveDataFromDisk();
-        DisplayHighScore();
     }
 
     private void Update()
@@ -76,45 +72,27 @@ public class MainManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                loadLocation.RaiseEvent(thisScene);
+                StartCoroutine(ReloadSceneRoutine());
             }
         }
     }
 
-    void AddPoint(int point)
+    private void AddPoint(int point)
     {
         playerScore.ApplyChange(point);
-        ScoreText.text = $"Score : {playerScore.Value}";
+        OnScorePoint?.Invoke(playerScore.Value);
     }
 
     public void GameOver()
     {
-        SaveHighScore();
+        gameOverEvent.RaiseEvent();
         _gameOver = true;
-        playerScore.SetValue(0);
-        GameOverText.SetActive(true);
     }
 
-    private void SaveHighScore()
+    private IEnumerator ReloadSceneRoutine()
     {
-        if (string.IsNullOrEmpty(playerName.Value))
-        {
-            Debug.LogWarningFormat($"High Score not saved, since there is no PlayerName!");
-            return;
-        }
-        
-        if (playerScore.Value > saveSystem.saveData.HighScore)
-        {
-            saveSystem.SaveDataToDisk();
-            DisplayHighScore();
-        }
-    }
-
-    private void DisplayHighScore()
-    {
-        var highScore = saveSystem.saveData.HighScore;
-        var highScorePlayerName = saveSystem.saveData.PlayerName;
-        HighScoreText.text = $"Best Score: {highScorePlayerName} : {highScore}";
+        yield return new WaitForEndOfFrame();
+        loadLocation.RaiseEvent(thisScene);
     }
 
     private void OnDisable()

@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 450625941}
   - component: {fileID: 450625942}
   m_Layer: 0
-  m_Name: MainManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -505,15 +505,11 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   loadLocation: {fileID: 11400000, guid: 24ce03a187e86403d8e43e9654dc84d8, type: 2}
-  saveSystem: {fileID: 11400000, guid: 7fe8e057326814f419544eb5033dfbdd, type: 2}
+  gameOverEvent: {fileID: 11400000, guid: 8d2b8c471ef6e4d60b1fc53acfe32813, type: 2}
   playerScore: {fileID: 11400000, guid: 1f6a9fb69a17f4fbfaf26abf4f823852, type: 2}
-  playerName: {fileID: 11400000, guid: ccaba8ddbd4e6403c8692b6a29f39bbb, type: 2}
   BrickPrefab: {fileID: 897975713663390409, guid: 63f25b9733d2bcd4fa2ff6de1264c739, type: 3}
   LineCount: 6
   Ball: {fileID: 177912862}
-  ScoreText: {fileID: 188020406}
-  HighScoreText: {fileID: 2078529056}
-  GameOverText: {fileID: 474497238}
 --- !u!1 &474497238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,7 +1147,7 @@ GameObject:
   - component: {fileID: 2078529057}
   - component: {fileID: 2078529056}
   m_Layer: 5
-  m_Name: ScoreText (1)
+  m_Name: BestScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1230,6 +1226,7 @@ GameObject:
   - component: {fileID: 2137539497}
   - component: {fileID: 2137539496}
   - component: {fileID: 2137539495}
+  - component: {fileID: 2137539499}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1320,3 +1317,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2137539499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137539494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a39f13975040d79bec60b603a4d03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveSystem: {fileID: 11400000, guid: 7fe8e057326814f419544eb5033dfbdd, type: 2}
+  onGameOver: {fileID: 11400000, guid: 8d2b8c471ef6e4d60b1fc53acfe32813, type: 2}
+  scoreText: {fileID: 188020406}
+  highScoreText: {fileID: 2078529056}
+  gameOverText: {fileID: 474497238}
