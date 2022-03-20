@@ -43,6 +43,7 @@ namespace Persistence
             if (FileManager.LoadFromFile(saveFilename, out var json))
             {
                 saveData.LoadFromJson(json);
+                playerName.Value = saveData.PlayerName;
                 playerScore.Value = saveData.HighScore;
                 
                 _dataLoadedInSession = true;
