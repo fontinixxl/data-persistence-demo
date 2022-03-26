@@ -1,8 +1,8 @@
-using Persistence;
+using Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.Main
 {
     public class InGameUIHandler : MonoBehaviour
     {
@@ -10,8 +10,8 @@ namespace UI
         [Header("Listen to")]
         [SerializeField] private VoidEventChannelSO onGameOver = default;
         [Header("UI Elements")]
+        [SerializeField] private UIBestScoreController UIBestScorePanel;
         [SerializeField] private Text scoreText;
-        [SerializeField] private Text highScoreText;
         [SerializeField] private GameObject gameOverText;
         
         private void OnEnable()
@@ -22,7 +22,7 @@ namespace UI
 
         private void Start()
         {
-            DisplayHighScore();
+            DisplayBestScore();
         }
 
         private void DisplayPoints(int points)
@@ -33,16 +33,17 @@ namespace UI
         private void DisplayGameOverText()
         {
             gameOverText.SetActive(true);
-            DisplayHighScore();
+            DisplayBestScore();
         }
 
-        private void DisplayHighScore()
+        private void DisplayBestScore()
         {
-            var playerName = saveSystem.saveData.PlayerName;
-            var highScore = saveSystem.saveData.HighScore;
-            highScoreText.text = $"Best Score: {playerName} : {highScore}";
+            var playerName = saveSystem.SaveData.PlayerName;
+            var bestScore = saveSystem.SaveData.HighScore;
+            
+            UIBestScorePanel.DisplayBestScoreText(playerName, bestScore);
         }
-        
+
         private void OnDisable()
         {
             GameController.OnScorePoint -= DisplayPoints;
