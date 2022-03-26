@@ -1,4 +1,4 @@
-using ScriptableObjects.PrimitiveTypes;
+using Core;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -7,14 +7,18 @@ using UnityEngine.UI;
 
 // Sets the script to be executed later than all default scripts
 // This is helpful for UI, since other things may need to be initialized before setting the UI
-namespace UI
+namespace UI.Menu
 {
     [DefaultExecutionOrder(1000)]
     public class MenuUIHandler : MonoBehaviour
     {
-        [SerializeField] private StringVariable playerName;
+        [Header("Dependencies")] 
+        [SerializeField] private SaveSystemSO saveSystem;
         [FormerlySerializedAs("PlayerInputField")] 
         [SerializeField] private InputField playerInputField;
+        [SerializeField] private UIBestScoreController UIBestScorePanel;
+        
+        [Header("Start Load")]
         [Tooltip("Scene to Load when the Start Button is clicked")]
         [SerializeField] private AssetReference mainScene;
 
@@ -24,13 +28,14 @@ namespace UI
     
         private void Start()
         {
-            playerInputField.text = playerName.Value;
+            playerInputField.text = saveSystem.playerName.Value;
+            UIBestScorePanel.DisplayBestScoreText(saveSystem.playerName.Value, saveSystem.playerScore.Value);
         }
 
         public void StartNewGameButtonHandler()
         {
             // Save player name to a Session var (StringVariableSO) globally accessible
-            playerName.Value = playerInputField.text;
+            saveSystem.playerName.Value = playerInputField.text;
             loadLocation.RaiseEvent(mainScene);
         }
 
@@ -38,6 +43,7 @@ namespace UI
         {
             deleteSavedData.RaiseEvent();
             playerInputField.text = string.Empty;
+            UIBestScorePanel.DisplayBestScoreText("", 0);
         }
 
         public void Exit()

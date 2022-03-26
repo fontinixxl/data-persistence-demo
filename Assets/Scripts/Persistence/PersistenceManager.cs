@@ -1,3 +1,4 @@
+using Core;
 using UnityEngine;
 
 namespace Persistence
@@ -9,7 +10,7 @@ namespace Persistence
         [Header("Listen to")]
         [SerializeField] private VoidEventChannelSO gameOverEvent = default;
         [SerializeField] private VoidEventChannelSO deleteSaveDataEvent = default;
-        
+
         private void Awake()
         {
             saveSystem.LoadSaveDataFromDisk();
@@ -28,7 +29,7 @@ namespace Persistence
 
         private void SaveHighScore()
         {
-            if (saveSystem.playerScore.Value > saveSystem.saveData.HighScore)
+            if (saveSystem.playerScore.Value > saveSystem.SaveData.HighScore)
             {
                 saveSystem.SaveDataToDisk();
             }

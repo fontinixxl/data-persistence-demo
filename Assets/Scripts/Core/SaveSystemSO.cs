@@ -1,7 +1,8 @@
+using Persistence;
 using ScriptableObjects.PrimitiveTypes;
 using UnityEngine;
 
-namespace Persistence
+namespace Core
 {
     // Commented so no other instance of SaveSystem is created
     // [CreateAssetMenu(menuName = "SO/SaveSystem", fileName = "SaveSystem", order = 0)]
@@ -11,22 +12,22 @@ namespace Persistence
         [Header("Runtime Data to Save")]
         public IntVariable playerScore;
         public StringVariable playerName;
-        public SaveData saveData = new SaveData();
+        public SaveData SaveData = new SaveData();
 
         private bool _dataLoadedInSession;
 
         private void OnDisable()
         {
-            saveData.Reset();
+            SaveData.Reset();
             _dataLoadedInSession = false;
         }
 
         public void SaveDataToDisk()
         {
-            saveData.HighScore = playerScore.Value;
-            saveData.PlayerName = playerName.Value;
+            SaveData.HighScore = playerScore.Value;
+            SaveData.PlayerName = playerName.Value;
             
-            if (FileManager.WriteToFile(saveFilename, saveData.ToJson()))
+            if (FileManager.WriteToFile(saveFilename, SaveData.ToJson()))
             {
                 Debug.Log("Save successful");
             }
@@ -42,9 +43,9 @@ namespace Persistence
             
             if (FileManager.LoadFromFile(saveFilename, out var json))
             {
-                saveData.LoadFromJson(json);
-                playerName.Value = saveData.PlayerName;
-                playerScore.Value = saveData.HighScore;
+                SaveData.LoadFromJson(json);
+                playerName.Value = SaveData.PlayerName;
+                playerScore.Value = SaveData.HighScore;
                 
                 _dataLoadedInSession = true;
                 return _dataLoadedInSession;
@@ -55,7 +56,7 @@ namespace Persistence
         
         public void WriteEmptySaveFile()
         {
-            saveData.Reset();
+            SaveData.Reset();
             _dataLoadedInSession = false;
             FileManager.WriteToFile(saveFilename, "");
         }
