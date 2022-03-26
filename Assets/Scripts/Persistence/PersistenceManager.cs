@@ -1,4 +1,4 @@
-using Core;
+using ScriptableObjects.EventChannels;
 using UnityEngine;
 
 namespace Persistence

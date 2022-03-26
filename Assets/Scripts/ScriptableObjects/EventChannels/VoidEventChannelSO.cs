@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// This class is used for Events that have no arguments (Example: Exit game event)
-/// </summary>
-[CreateAssetMenu(menuName = "Events/Void Event Channel")]
-public class VoidEventChannelSO : ScriptableObject
+namespace ScriptableObjects.EventChannels
 {
-    public UnityAction OnEventRaised;
-
-    public void RaiseEvent()
+    /// <summary>
+    /// This class is used for Events that have no arguments (Example: Exit game event)
+    /// </summary>
+    [CreateAssetMenu(menuName = "Events/Void Event Channel")]
+    public class VoidEventChannelSO : ScriptableObject
     {
-        if (OnEventRaised != null)
-            OnEventRaised.Invoke();
+        public UnityAction OnEventRaised;
+
+        public void RaiseEvent()
+        {
+            if (OnEventRaised != null)
+                OnEventRaised.Invoke();
+        }
     }
 }

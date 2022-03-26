@@ -1,6 +1,7 @@
+using ScriptableObjects.EventChannels;
 using UnityEngine;
 
-namespace ScriptableObjects.PrimitiveTypes
+namespace ScriptableObjects.ScriptableTypes
 {
     [CreateAssetMenu(fileName = "MyIntVariable", menuName = "SO/Variables/IntVariable", order = 1)]
     public class IntVariable : EventChannelBaseSO

@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public class EventChannelBaseSO : ScriptableObject
+namespace ScriptableObjects.EventChannels
 {
+    public class EventChannelBaseSO : ScriptableObject
+    {
 #if UNITY_EDITOR
-    [TextArea] public string description = string.Empty;
+        [TextArea] public string description = string.Empty;
 #endif
+    }
 }

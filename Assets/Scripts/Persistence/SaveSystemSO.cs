@@ -1,8 +1,7 @@
-using Persistence;
-using ScriptableObjects.PrimitiveTypes;
+using ScriptableObjects.ScriptableTypes;
 using UnityEngine;
 
-namespace Core
+namespace Persistence
 {
     // Commented so no other instance of SaveSystem is created
     // [CreateAssetMenu(menuName = "SO/SaveSystem", fileName = "SaveSystem", order = 0)]

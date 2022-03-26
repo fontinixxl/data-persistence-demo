@@ -1,12 +1,12 @@
-using Core;
+using ScriptableObjects.EventChannels;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Main
+namespace Gameplay.UI
 {
     public class InGameUIHandler : MonoBehaviour
     {
-        [SerializeField] private SaveSystemSO saveSystem;
         [Header("Listen to")]
         [SerializeField] private VoidEventChannelSO onGameOver = default;
         [Header("UI Elements")]
@@ -19,12 +19,13 @@ namespace UI.Main
             GameController.OnScorePoint += DisplayPoints;
             onGameOver.OnEventRaised += DisplayGameOverText;
         }
-
-        private void Start()
+        
+        private void OnDisable()
         {
-            DisplayBestScore();
+            GameController.OnScorePoint -= DisplayPoints;
+            onGameOver.OnEventRaised -= DisplayGameOverText;
         }
-
+        
         private void DisplayPoints(int points)
         {
             scoreText.text = $"Score : {points}";
@@ -33,21 +34,11 @@ namespace UI.Main
         private void DisplayGameOverText()
         {
             gameOverText.SetActive(true);
-            DisplayBestScore();
         }
 
-        private void DisplayBestScore()
+        public void DisplayBestScore(string playerName, int bestScore)
         {
-            var playerName = saveSystem.SaveData.PlayerName;
-            var bestScore = saveSystem.SaveData.HighScore;
-            
             UIBestScorePanel.DisplayBestScoreText(playerName, bestScore);
-        }
-
-        private void OnDisable()
-        {
-            GameController.OnScorePoint -= DisplayPoints;
-            onGameOver.OnEventRaised -= DisplayGameOverText;
         }
     }
 }

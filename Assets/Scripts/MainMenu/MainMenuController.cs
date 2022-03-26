@@ -1,4 +1,6 @@
-using Core;
+using Persistence;
+using ScriptableObjects.EventChannels;
+using UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -7,10 +9,10 @@ using UnityEngine.UI;
 
 // Sets the script to be executed later than all default scripts
 // This is helpful for UI, since other things may need to be initialized before setting the UI
-namespace UI.Menu
+namespace MainMenu
 {
     [DefaultExecutionOrder(1000)]
-    public class MenuUIHandler : MonoBehaviour
+    public class MainMenuController : MonoBehaviour
     {
         [Header("Dependencies")] 
         [SerializeField] private SaveSystemSO saveSystem;
