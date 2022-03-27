@@ -1,6 +1,6 @@
-using Persistence;
-using ScriptableObjects.EventChannels;
-using UI;
+using Fontinixxl.Persistence;
+using Fontinixxl.ScriptableObjects.EventChannels;
+using Fontinixxl.UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 // Sets the script to be executed later than all default scripts
 // This is helpful for UI, since other things may need to be initialized before setting the UI
-namespace MainMenu
+namespace Fontinixxl.MainMenu
 {
     [DefaultExecutionOrder(1000)]
     public class MainMenuController : MonoBehaviour

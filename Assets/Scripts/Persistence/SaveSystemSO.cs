@@ -1,7 +1,7 @@
-using ScriptableObjects.ScriptableTypes;
+using Fontinixxl.ScriptableObjects.ScriptableTypes;
 using UnityEngine;
 
-namespace Persistence
+namespace Fontinixxl.Persistence
 {
     // Commented so no other instance of SaveSystem is created
     // [CreateAssetMenu(menuName = "SO/SaveSystem", fileName = "SaveSystem", order = 0)]

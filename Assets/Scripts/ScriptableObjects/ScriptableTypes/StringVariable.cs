@@ -1,7 +1,7 @@
-using ScriptableObjects.EventChannels;
+using Fontinixxl.ScriptableObjects.EventChannels;
 using UnityEngine;
 
-namespace ScriptableObjects.ScriptableTypes
+namespace Fontinixxl.ScriptableObjects.ScriptableTypes
 {
     [CreateAssetMenu(fileName = "MyStringVariable", menuName = "SO/Variables/StringVariable", order = 0)]
     public class StringVariable : EventChannelBaseSO

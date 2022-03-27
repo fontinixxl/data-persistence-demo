@@ -1,11 +1,11 @@
-using ScriptableObjects.EventChannels;
+using Fontinixxl.ScriptableObjects.EventChannels;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace SceneManagement
+namespace Fontinixxl.SceneManagement
 {
     public class SceneLoader : MonoBehaviour
     {

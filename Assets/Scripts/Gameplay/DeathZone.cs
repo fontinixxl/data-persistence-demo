@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gameplay
+namespace Fontinixxl.Gameplay
 {
     public class DeathZone : MonoBehaviour
     {

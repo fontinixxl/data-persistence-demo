@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Persistence
+namespace Fontinixxl.Persistence
 {
     [Serializable]
     public class SaveData

@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveSystem: {fileID: 11400000, guid: 7fe8e057326814f419544eb5033dfbdd, type: 2}
-  gameOverEvent: {fileID: 11400000, guid: 8d2b8c471ef6e4d60b1fc53acfe32813, type: 2}
+  gameOverEvent: {fileID: 11400000, guid: c645129a30c0944fbaee82eb1a7caba2, type: 2}
   deleteSaveDataEvent: {fileID: 11400000, guid: b6db280d806a44d01b3c7bb05c1faf58, type: 2}
 --- !u!4 &188438906
 Transform:

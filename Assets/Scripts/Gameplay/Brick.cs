@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Gameplay
+namespace Fontinixxl.Gameplay
 {
     public class Brick : MonoBehaviour
     {

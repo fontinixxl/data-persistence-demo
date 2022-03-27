@@ -1,14 +1,14 @@
-using ScriptableObjects.EventChannels;
+using Fontinixxl.ScriptableObjects.EventChannels;
 using UnityEngine;
 
-namespace Persistence
+namespace Fontinixxl.Persistence
 {
     public class PersistenceManager : MonoBehaviour
     {
         [SerializeField] private SaveSystemSO saveSystem;
 
         [Header("Listen to")]
-        [SerializeField] private VoidEventChannelSO gameOverEvent = default;
+        [SerializeField] private BoolEventChannelSO gameOverEvent = default;
         [SerializeField] private VoidEventChannelSO deleteSaveDataEvent = default;
 
         private void Awake()
@@ -22,17 +22,20 @@ namespace Persistence
             deleteSaveDataEvent.OnEventRaised += DeleteSavedData;
         }
 
+        private void OnDisable()
+        {
+            gameOverEvent.OnEventRaised -= SaveHighScore;
+            deleteSaveDataEvent.OnEventRaised -= DeleteSavedData;
+        }
+
         private void DeleteSavedData()
         {
             saveSystem.WriteEmptySaveFile();
         }
 
-        private void SaveHighScore()
+        private void SaveHighScore(bool isHighScore)
         {
-            if (saveSystem.playerScore.Value > saveSystem.SaveData.HighScore)
-            {
-                saveSystem.SaveDataToDisk();
-            }
+            if (isHighScore) saveSystem.SaveDataToDisk();
         }
     }
 }

@@ -505,11 +505,12 @@ MonoBehaviour:
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   loadLocation: {fileID: 11400000, guid: 24ce03a187e86403d8e43e9654dc84d8, type: 2}
-  gameOverEvent: {fileID: 11400000, guid: 8d2b8c471ef6e4d60b1fc53acfe32813, type: 2}
+  gameOverEvent: {fileID: 11400000, guid: c645129a30c0944fbaee82eb1a7caba2, type: 2}
+  saveSystem: {fileID: 11400000, guid: 7fe8e057326814f419544eb5033dfbdd, type: 2}
   playerScore: {fileID: 11400000, guid: 1f6a9fb69a17f4fbfaf26abf4f823852, type: 2}
-  BrickPrefab: {fileID: 897975713663390409, guid: 63f25b9733d2bcd4fa2ff6de1264c739, type: 3}
-  LineCount: 6
-  Ball: {fileID: 177912862}
+  brickPrefab: {fileID: 897975713663390409, guid: 63f25b9733d2bcd4fa2ff6de1264c739, type: 3}
+  ball: {fileID: 177912862}
+  lineCount: 6
 --- !u!1 &474497238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,7 +1257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveSystem: {fileID: 11400000, guid: 7fe8e057326814f419544eb5033dfbdd, type: 2}
-  onGameOver: {fileID: 11400000, guid: 8d2b8c471ef6e4d60b1fc53acfe32813, type: 2}
+  onGameOver: {fileID: 11400000, guid: c645129a30c0944fbaee82eb1a7caba2, type: 2}
   UIBestScorePanel: {fileID: 1416138775178415671}
   scoreText: {fileID: 188020406}
   gameOverText: {fileID: 474497238}

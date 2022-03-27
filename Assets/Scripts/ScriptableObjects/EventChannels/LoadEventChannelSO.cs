@@ -2,7 +2,7 @@
 using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 
-namespace ScriptableObjects.EventChannels
+namespace Fontinixxl.ScriptableObjects.EventChannels
 {
 	/// <summary>
 	/// This class is used for scene-loading events.

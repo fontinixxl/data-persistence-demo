@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-namespace Persistence
+namespace Fontinixxl.Persistence
 {
     public static class FileManager
     {

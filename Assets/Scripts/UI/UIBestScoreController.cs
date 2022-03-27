@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace Fontinixxl.UI
 {
     public class UIBestScoreController : MonoBehaviour
     {
