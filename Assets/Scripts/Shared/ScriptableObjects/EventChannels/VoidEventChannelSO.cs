@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Fontinixxl.ScriptableObjects.EventChannels
+namespace Fontinixxl.Shared.ScriptableObjects.EventChannels
 {
     /// <summary>
     /// This class is used for Events that have no arguments (Example: Exit game event)

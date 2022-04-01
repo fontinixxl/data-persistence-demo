@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using Fontinixxl.Persistence;
-using Fontinixxl.ScriptableObjects.EventChannels;
-using Fontinixxl.ScriptableObjects.ScriptableTypes;
+using Fontinixxl.Shared.ScriptableObjects.EventChannels;
+using Fontinixxl.Shared.ScriptableObjects.ScriptableTypes;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Random = UnityEngine.Random;

@@ -1,4 +1,4 @@
-using Fontinixxl.ScriptableObjects.EventChannels;
+using Fontinixxl.Shared.ScriptableObjects.EventChannels;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;

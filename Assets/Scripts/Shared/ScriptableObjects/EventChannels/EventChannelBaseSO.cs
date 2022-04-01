@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Fontinixxl.ScriptableObjects.EventChannels
+namespace Fontinixxl.Shared.ScriptableObjects.EventChannels
 {
     public class EventChannelBaseSO : ScriptableObject
     {

@@ -1,6 +1,7 @@
 using Fontinixxl.Persistence;
-using Fontinixxl.ScriptableObjects.EventChannels;
-using Fontinixxl.UI;
+using Fontinixxl.Shared.ScriptableObjects;
+using Fontinixxl.Shared.ScriptableObjects.EventChannels;
+using Fontinixxl.Shared.UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

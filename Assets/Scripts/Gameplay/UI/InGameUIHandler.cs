@@ -1,10 +1,11 @@
-using Fontinixxl.Gameplay;
 using Fontinixxl.Persistence;
-using Fontinixxl.ScriptableObjects.EventChannels;
+using Fontinixxl.Shared.ScriptableObjects;
+using Fontinixxl.Shared.ScriptableObjects.EventChannels;
+using Fontinixxl.Shared.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Fontinixxl.UI
+namespace Fontinixxl.Gameplay.UI
 {
     public class InGameUIHandler : MonoBehaviour
     {

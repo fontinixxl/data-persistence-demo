@@ -1,4 +1,4 @@
-using Fontinixxl.ScriptableObjects.ScriptableTypes;
+using Fontinixxl.Shared.ScriptableObjects.ScriptableTypes;
 using UnityEngine;
 
 namespace Fontinixxl.Persistence
@@ -11,6 +11,7 @@ namespace Fontinixxl.Persistence
         [Header("Runtime Data to Save")]
         public IntVariable playerScore;
         public StringVariable playerName;
+        
         public SaveData SaveData = new SaveData();
 
         private bool _dataLoadedInSession;
