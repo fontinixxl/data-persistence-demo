@@ -1,14 +1,16 @@
 using System;
-using System.Collections;
 using Fontinixxl.Persistence;
 using Fontinixxl.Shared.ScriptableObjects.EventChannels;
 using Fontinixxl.Shared.ScriptableObjects.ScriptableTypes;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using Random = UnityEngine.Random;
 
 namespace Fontinixxl.Gameplay
 {
+    /// <summary>
+    /// Central manager for the Gameplay, will trigger events for the UI to display
+    /// score and handle logic for the game over
+    /// </summary>
     public class GameController : MonoBehaviour
     {
         [Header("Listening to")] [SerializeField]
@@ -16,41 +18,52 @@ namespace Fontinixxl.Gameplay
         
         [Header("Broadcasting on")]
         [SerializeField] private AssetReference thisScene;
-        [SerializeField] private LoadEventChannelSO loadLocation = default;
         [SerializeField] private BoolEventChannelSO gameOverEvent = default;
         
         [Header("Dependencies")]
         [SerializeField] private SaveSystemSO saveSystem;
         [SerializeField] private IntVariable playerScore;
         [SerializeField] private Brick brickPrefab;
-        [SerializeField] private Rigidbody ball;
-        
+        [SerializeField] private Ball ballPrefab;
+
         [Header("Level Generator")]
         [SerializeField] private int lineCount = 6;
     
         public static event Action<int> OnScorePoint;
+        public static event Action OnGameStart;
 
         private bool _started;
         private bool _gameOver;
+        private GameObject _bricksAnchor;
 
         private void OnEnable()
         {
-            onSceneReady.OnEventRaised += StartGame;
+            onSceneReady.OnEventRaised += InitializeGame;
         }
         
         private void OnDisable()
         {
-            onSceneReady.OnEventRaised -= StartGame;
+            onSceneReady.OnEventRaised -= InitializeGame;
+        }
+        
+        private void InitializeGame()
+        {
+            playerScore.SetValue(0);
+            _started = false;
+            _gameOver = false;
+            DestroyRemainingBricks();
+            GenerateLevel();
+            SpawnBall();
         }
 
-        private void StartGame()
+        private void GenerateLevel()
         {
-            // Reset score from previous sessions
-            playerScore.SetValue(0);
-
             const float step = 0.6f;
             var perLine = Mathf.FloorToInt(4.0f / step);
-            var bricksAnchor = new GameObject("Bricks");
+            if (_bricksAnchor == null)
+            {
+                _bricksAnchor = new GameObject("Bricks");
+            }
             int[] pointCountArray = {1,1,2,2,5,5};
             for (var i = 0; i < lineCount; ++i)
             {
@@ -58,7 +71,7 @@ namespace Fontinixxl.Gameplay
                 {
                     var position = new Vector3(-1.5f + step * x, 2.5f + i * 0.3f, 0);
                     var brick = Instantiate(brickPrefab, position, Quaternion.identity);
-                    brick.transform.SetParent(bricksAnchor.transform);
+                    brick.transform.SetParent(_bricksAnchor.transform);
                 
                     brick.PointValue = pointCountArray[i];
                     brick.onDestroyed.AddListener(AddPoint);
@@ -73,21 +86,29 @@ namespace Fontinixxl.Gameplay
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     _started = true;
-                    float randomDirection = Random.Range(-1.0f, 1.0f);
-                    Vector3 forceDir = new Vector3(randomDirection, 1, 0);
-                    forceDir.Normalize();
-
-                    ball.transform.SetParent(null);
-                    ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
+                    OnGameStart?.Invoke();
                 }
             }
             else if (_gameOver)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    StartCoroutine(ReloadSceneRoutine());
+                    InitializeGame();
                 }
             }
+        }
+
+        private void SpawnBall()
+        {
+            var paddleTransform = GetComponentInChildren<Paddle>().transform; 
+            var paddleCollider = paddleTransform.GetComponent<BoxCollider>();
+            var bounds = paddleCollider.bounds;
+            var offset = bounds.extents.y + 0.1f;
+            var spawnPoint = bounds.center + Vector3.up * offset;
+            
+            // Instantiate ball prefab as a child of paddle so before the game start the ball will
+            // move following the paddle move
+            Instantiate(ballPrefab, spawnPoint, ballPrefab.transform.rotation, paddleTransform);
         }
 
         private void AddPoint(int point)
@@ -103,10 +124,14 @@ namespace Fontinixxl.Gameplay
             _gameOver = true;
         }
 
-        private IEnumerator ReloadSceneRoutine()
+        private void DestroyRemainingBricks()
         {
-            yield return new WaitForEndOfFrame();
-            loadLocation.RaiseEvent(thisScene);
+            // Only if the game has been played at least once
+            if (_bricksAnchor == null) return;
+            
+            foreach (Transform child in _bricksAnchor.transform) {
+                Destroy(child.gameObject);
+            }
         }
     }
 }

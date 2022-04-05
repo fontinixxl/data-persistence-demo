@@ -27,6 +27,10 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Scene
+  - m_GUID: 84e8448b215c74f4d804a0bab678864c
+    m_Address: Assets/Scenes/PersistenceManagers.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cfc66a5c6bb844e1ea7a9f55a3c263d3, type: 2}
   m_SchemaSet:

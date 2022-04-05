@@ -2,4 +2,3 @@
 - Implement ColdStartup for loading PersistenceManager from Main Scene if
   it was not loaded. It will allow us to test the game without having to load
   manually PersistenceManager from Editor
-- Add assembly definitions

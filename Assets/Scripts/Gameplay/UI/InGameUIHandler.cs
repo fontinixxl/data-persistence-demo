@@ -1,5 +1,4 @@
 using Fontinixxl.Persistence;
-using Fontinixxl.Shared.ScriptableObjects;
 using Fontinixxl.Shared.ScriptableObjects.EventChannels;
 using Fontinixxl.Shared.UI;
 using UnityEngine;
@@ -7,6 +6,9 @@ using UnityEngine.UI;
 
 namespace Fontinixxl.Gameplay.UI
 {
+    /// <summary>
+    /// Handle in game UI, displaying the current and high score
+    /// </summary>
     public class InGameUIHandler : MonoBehaviour
     {
         [Header("Dependencies")] 
@@ -14,6 +16,7 @@ namespace Fontinixxl.Gameplay.UI
 
         [Header("Listen to")]
         [SerializeField] private BoolEventChannelSO onGameOver = default;
+        [SerializeField] private VoidEventChannelSO onSceneReady = default;
         
         [Header("UI Elements")]
         [SerializeField] private UIBestScoreController UIBestScorePanel;
@@ -22,22 +25,27 @@ namespace Fontinixxl.Gameplay.UI
         
         private void OnEnable()
         {
+            GameController.OnGameStart += HideGameOverText;
             GameController.OnScorePoint += DisplayPoints;
+            onSceneReady.OnEventRaised += OnGameStartEventHandler;
             onGameOver.OnEventRaised += OnGameOverEventHandler;
         }
-        
+
         private void OnDisable()
         {
+            GameController.OnGameStart -= HideGameOverText;
             GameController.OnScorePoint -= DisplayPoints;
+            onSceneReady.OnEventRaised -= OnGameStartEventHandler;
             onGameOver.OnEventRaised -= OnGameOverEventHandler;
         }
 
-        private void Start()
+        private void OnGameStartEventHandler()
         {
-            // Update Best Score UI with data loaded from disk
+            gameOverText.SetActive(false);
+            // Best Score is displayed after the OnSceneReady event so we know the save data is loaded
             DisplayBestScore(saveSystem.SaveData.PlayerName, saveSystem.SaveData.HighScore);
         }
-
+        
         private void OnGameOverEventHandler(bool isHighScore)
         {
             if (isHighScore)
@@ -56,6 +64,11 @@ namespace Fontinixxl.Gameplay.UI
         private void DisplayGameOverText()
         {
             gameOverText.SetActive(true);
+        }
+
+        private void HideGameOverText()
+        {
+            gameOverText.SetActive(false);
         }
 
         private void DisplayBestScore(string pName, int bestScore)

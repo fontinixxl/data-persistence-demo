@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Fontinixxl.Gameplay
 {
@@ -6,9 +8,29 @@ namespace Fontinixxl.Gameplay
     {
         private Rigidbody m_Rigidbody;
 
-        void Start()
+        private void OnEnable()
+        {
+            GameController.OnGameStart += ApplyInitVelocity;
+        }
+
+        private void OnDisable()
+        {
+            GameController.OnGameStart -= ApplyInitVelocity;
+        }
+
+        private void Start()
         {
             m_Rigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void ApplyInitVelocity()
+        {
+            var randomDirection = Random.Range(-1.0f, 1.0f);
+            var forceDir = new Vector3(randomDirection, 1, 0);
+            forceDir.Normalize();
+            
+            transform.SetParent(null);
+            m_Rigidbody.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
         }
     
         private void OnCollisionExit(Collision other)

@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04f3d1ce2359414ea02c708c2ae7a17d, type: 3}
-  m_Name: OnSceneRedy_Channel
+  m_Name: OnSceneReady_Channel
   m_EditorClassIdentifier: 

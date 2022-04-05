@@ -11,7 +11,7 @@ namespace Fontinixxl.SceneManagement
     {
         [Header("Load Events")]
         [SerializeField] private LoadEventChannelSO loadLocation = default;
-        [Header("BroadCast On")] 
+        [Header("BroadCast On")]
         [SerializeField] private VoidEventChannelSO onSceneReady;
     
         public AssetReference mainMenuScene;
@@ -26,10 +26,10 @@ namespace Fontinixxl.SceneManagement
             loadLocation.OnLoadingRequested += LoadLocation;
         }
     
-        private void Start()
-        {
-            LoadLocation(mainMenuScene);
-        }
+        // private void Start()
+        // {
+        //     LoadLocation(mainMenuScene);
+        // }
 
         /// <summary>
         /// This function loads the location scenes passed as parameter

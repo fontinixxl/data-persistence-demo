@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PersistenceManagers.unity
     guid: 84e8448b215c74f4d804a0bab678864c
   m_configObjects:
