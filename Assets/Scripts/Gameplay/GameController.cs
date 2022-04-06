@@ -7,12 +7,23 @@ using UnityEngine.AddressableAssets;
 
 namespace Fontinixxl.Gameplay
 {
+    public enum GameSate
+    {
+        WaitForSceneLoad,
+        ReadyStart,
+        Gameplay,
+        GameOver
+    }
+    
     /// <summary>
     /// Central manager for the Gameplay, will trigger events for the UI to display
     /// score and handle logic for the game over
     /// </summary>
     public class GameController : MonoBehaviour
     {
+        public static event Action<int> OnScorePoint;
+        public static event Action OnGameStart;
+        
         [Header("Listening to")] [SerializeField]
         private VoidEventChannelSO onSceneReady;
         
@@ -28,34 +39,62 @@ namespace Fontinixxl.Gameplay
 
         [Header("Level Generator")]
         [SerializeField] private int lineCount = 6;
-    
-        public static event Action<int> OnScorePoint;
-        public static event Action OnGameStart;
-
-        private bool _started;
-        private bool _gameOver;
+        
         private GameObject _bricksAnchor;
-
+        private GameSate _currentGameSate;
+        private GameSate _previousGameSate;
+        
         private void OnEnable()
         {
-            onSceneReady.OnEventRaised += InitializeGame;
+            _previousGameSate = _currentGameSate = GameSate.WaitForSceneLoad;
+            onSceneReady.OnEventRaised += ResetGameplaySates;
         }
         
         private void OnDisable()
         {
-            onSceneReady.OnEventRaised -= InitializeGame;
+            onSceneReady.OnEventRaised -= ResetGameplaySates;
         }
-        
-        private void InitializeGame()
+
+        private void ResetGameplaySates()
         {
             playerScore.SetValue(0);
-            _started = false;
-            _gameOver = false;
             DestroyRemainingBricks();
             GenerateLevel();
             SpawnBall();
+            
+            ChangeGameState(GameSate.ReadyStart);
+        }
+        
+        private void ChangeGameState(GameSate gameSate)
+        {
+            _previousGameSate = _currentGameSate;
+
+            if (gameSate == GameSate.Gameplay)
+            {
+                if (_previousGameSate == GameSate.GameOver) ResetGameplaySates();
+                OnGameStart?.Invoke();
+            }
+            
+            _currentGameSate = gameSate;
         }
 
+        private void Update()
+        {
+            if (_currentGameSate == GameSate.ReadyStart || _currentGameSate == GameSate.GameOver)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    ChangeGameState(GameSate.Gameplay);
+                }
+            }
+        }
+
+        public void GameOver()
+        {
+            gameOverEvent.RaiseEvent(playerScore.Value > saveSystem.SaveData.HighScore);
+            ChangeGameState(GameSate.GameOver);
+        }
+        
         private void GenerateLevel()
         {
             const float step = 0.6f;
@@ -78,26 +117,7 @@ namespace Fontinixxl.Gameplay
                 }
             }
         }
-
-        private void Update()
-        {
-            if (!_started)
-            {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    _started = true;
-                    OnGameStart?.Invoke();
-                }
-            }
-            else if (_gameOver)
-            {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    InitializeGame();
-                }
-            }
-        }
-
+        
         private void SpawnBall()
         {
             var paddleTransform = GetComponentInChildren<Paddle>().transform; 
@@ -115,13 +135,6 @@ namespace Fontinixxl.Gameplay
         {
             playerScore.ApplyChange(point);
             OnScorePoint?.Invoke(playerScore.Value);
-        }
-
-        public void GameOver()
-        {
-            var isHighScore = playerScore.Value > saveSystem.SaveData.HighScore;
-            gameOverEvent.RaiseEvent(isHighScore);
-            _gameOver = true;
         }
 
         private void DestroyRemainingBricks()

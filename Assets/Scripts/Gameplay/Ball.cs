@@ -18,13 +18,10 @@ namespace Fontinixxl.Gameplay
             GameController.OnGameStart -= ApplyInitVelocity;
         }
 
-        private void Start()
-        {
-            m_Rigidbody = GetComponent<Rigidbody>();
-        }
-
         private void ApplyInitVelocity()
         {
+            m_Rigidbody = GetComponent<Rigidbody>();
+            
             var randomDirection = Random.Range(-1.0f, 1.0f);
             var forceDir = new Vector3(randomDirection, 1, 0);
             forceDir.Normalize();
