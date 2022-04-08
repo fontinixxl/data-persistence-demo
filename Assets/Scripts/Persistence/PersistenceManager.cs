@@ -1,4 +1,3 @@
-using Fontinixxl.Shared.ScriptableObjects;
 using Fontinixxl.Shared.ScriptableObjects.EventChannels;
 using UnityEngine;
 

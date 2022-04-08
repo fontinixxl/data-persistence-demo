@@ -11,10 +11,9 @@ namespace Fontinixxl.SceneManagement
     {
         [Header("Load Events")]
         [SerializeField] private LoadEventChannelSO loadLocation = default;
+        [SerializeField] private LoadEventChannelSO _loadMenu = default;
         [Header("BroadCast On")]
         [SerializeField] private VoidEventChannelSO onSceneReady;
-    
-        public AssetReference mainMenuScene;
 
         private AsyncOperationHandle<SceneInstance> _handle;
         private AssetReference _currentlyLoadedScene;
@@ -23,13 +22,19 @@ namespace Fontinixxl.SceneManagement
     
         private void OnEnable()
         {
+            _loadMenu.OnLoadingRequested += LoadMenu;
             loadLocation.OnLoadingRequested += LoadLocation;
         }
-    
-        // private void Start()
-        // {
-        //     LoadLocation(mainMenuScene);
-        // }
+
+        private void LoadMenu(AssetReference menuToLoad)
+        {
+            if (_isLoading) return;
+            
+            _sceneToLoad = menuToLoad;
+            _isLoading = true;
+            
+            LoadNewScene();
+        }
 
         /// <summary>
         /// This function loads the location scenes passed as parameter
@@ -71,13 +76,14 @@ namespace Fontinixxl.SceneManagement
             }
             else
             {
-                Debug.LogWarningFormat($"Failure loading {mainMenuScene.Asset.name} Scene");
+                Debug.LogWarningFormat($"Failure loading {obj.Result.Scene.name} Scene");
             }
         }
 
         private void OnDisable()
         {
             loadLocation.OnLoadingRequested -= LoadLocation;
+            _loadMenu.OnLoadingRequested -= LoadMenu;
         }
     }
 }
