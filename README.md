@@ -12,7 +12,7 @@ Initially part of the [Unity Junior Pathway - Data persistence mission](https://
 architecture of the proposed solution, so it can be addressed to a more middle/advance programmers, and apply the concepts in bigger projects, 
 where using good programing practices become crucial in the long term.
 
-<center>
+<p align="middle">
 <img src="Screenshots/MainMenu.png" width="300"/>
-<img src="Screenshots/gameplay.png" width="300"/>
-</center>
+<img src="Screenshots/gameplay.png" width="276"/>
+</p>
