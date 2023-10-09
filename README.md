@@ -8,11 +8,12 @@ Inspired by the following work:
 - Unity Open Project -  [ChopChop](https://github.com/UnityTechnologies/open-project-1)
 - Unite Austin 2017 - [Game Architecture with Scriptable Objects](https://www.youtube.com/watch?v=raQ3iHhE_Kk) with Ryan Hipple
 
-Initially part of the [Unity Junior Pathway - Data persistence mission](https://learn.unity.com/tutorial/submission-data-persistence-in-a-new-repo), but I ended up adding many more features and improving the
-architecture of the proposed solution, so it can be addressed to a more middle/advance programmers, and apply the concepts in bigger projects, 
-where using good programing practices become crucial in the long term.
+This showcase is intended to spotlight exemplary game architecture practices, designed for advanced programmers who wish to elevate their skills further.
 
 <p align="middle">
 <img src="Screenshots/MainMenu.png" width="300"/>
 <img src="Screenshots/gameplay.png" width="276"/>
 </p>
+
+## Disclaimer
+Please note that the main focus of this demo is to highlight best practices in game architecture, specifically in the implementation of a persistence data system, event-driven architecture, and utilization of Scriptable Objects, among others. Consequently, elements like gameplay logic, art, and UI may not be polished to high standards. 
